@@ -67,8 +67,8 @@ body {
 	margin-bottom: 10px;
 	max-height: calc(100vh - 150px);
 	overflow-y: auto;
-  }
-  
+}
+
 
 .output {
 	color: #f2f2f2;

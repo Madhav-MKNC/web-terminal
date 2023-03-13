@@ -9,22 +9,27 @@ commandLine.addEventListener('keydown', (e) => {
       historyIndex++;
       commandLine.value = commandHistory[commandHistory.length - historyIndex];
     }
-  } else if (e.key === 'ArrowDown') {
+  }
+  else if (e.key === 'ArrowDown') {
     if (historyIndex > 1) {
       historyIndex--;
       commandLine.value = commandHistory[commandHistory.length - historyIndex];
-    } else if (historyIndex === 1) {
+    }
+    else if (historyIndex === 1) {
       historyIndex = 0;
       commandLine.value = '';
     }
   }
-});
-
-commandLine.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter') {
+  else if (e.key === 'Enter') {
     const command = commandLine.value.trim();
     commandHistory.unshift(command);
     historyIndex = 0;
+
+    if (command === 'clear'){
+      outputArea.innerHTML = '';
+      commandLine.value = '';
+      return;
+    }
 
     const prompt = document.createElement('span');
     prompt.classList.add('prompt');
@@ -40,22 +45,27 @@ commandLine.addEventListener('keydown', (e) => {
     const outputText = document.createElement('pre');
     outputText.classList.add('output-text');
 
-    if (command === 'clear') {
-      // clear the output area and return
-      outputArea.innerHTML = '';
-      commandLine.value = '';
-      return;
-    } else if (command === 'help') {
-      outputText.textContent = `List of available commands:
-      clear - Clear the terminal screen
-      help - Display this help text
-      echo - Display a message
-      `;
-    } else if (command.startsWith('echo ')) {
-      const message = command.slice(5);
-      outputText.textContent = message;
-    } else {
-      outputText.textContent = `Unrecognized command: ${command}`;
+    switch (command) {
+      case 'exit':
+      case 'quit':
+        if (confirm("Close Window?")) {
+          close();
+        }
+        break;
+      case 'help':
+        outputText.textContent = `List of available commands:
+        clear - Clear the terminal screen
+        help - Display this help text
+        echo - Display a message
+        `;
+        break;
+      default:
+        if (command.startsWith('echo ')) {
+          const message = command.slice(5);
+          outputText.textContent = message;
+        } else {
+          outputText.textContent = `Unrecognized command: ${command}`;
+        }
     }
 
     output.appendChild(prompt);

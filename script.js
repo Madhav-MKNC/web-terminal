@@ -47,6 +47,10 @@ commandLine.addEventListener('keydown', (e) => {
 
     switch (command) {
       case 'exit':
+        if (confirm("Close Window?")) {
+          close();
+        }
+        break;
       case 'quit':
         if (confirm("Close Window?")) {
           close();

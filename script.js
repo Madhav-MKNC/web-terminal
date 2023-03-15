@@ -7,22 +7,18 @@ commandLine.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowUp') {
     if (historyIndex < commandHistory.length) {
       historyIndex++;
-      commandLine.value = commandHistory[commandHistory.length - historyIndex];
     }
+    commandLine.value = commandHistory[commandHistory.length - historyIndex] || '';
   }
   else if (e.key === 'ArrowDown') {
     if (historyIndex > 1) {
       historyIndex--;
-      commandLine.value = commandHistory[commandHistory.length - historyIndex];
     }
-    else if (historyIndex === 1) {
-      historyIndex = 0;
-      commandLine.value = '';
-    }
+    commandLine.value = commandHistory[commandHistory.length - historyIndex] || '';
   }
   else if (e.key === 'Enter') {
     const command = commandLine.value.trim();
-    commandHistory.unshift(command);
+    commandHistory.push(command);
     historyIndex = 0;
 
     if (command === 'clear'){
@@ -45,6 +41,7 @@ commandLine.addEventListener('keydown', (e) => {
     const outputText = document.createElement('pre');
     outputText.classList.add('output-text');
 
+    // commands handling
     switch (command) {
       case 'exit':
         if (confirm("Close Window?")) {

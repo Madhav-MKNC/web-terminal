@@ -3,7 +3,16 @@ const outputArea = document.querySelector('.output-container');
 const commandHistory = [];
 let historyIndex = 0;
 
+// outputs
+const helpText = `List of available commands:
+clear - Clear the terminal screen
+help - Display this help text
+echo - Display a message`;
+
+
 commandLine.addEventListener('keydown', (e) => {
+  // keydown issue
+  console.log('keydown event triggered'); 
   if (e.key === 'ArrowUp') {
     if (historyIndex < commandHistory.length) {
       historyIndex++;
@@ -54,11 +63,7 @@ commandLine.addEventListener('keydown', (e) => {
         }
         break;
       case 'help':
-        outputText.textContent = `List of available commands:
-        clear - Clear the terminal screen
-        help - Display this help text
-        echo - Display a message
-        `;
+        outputText.textContent = helpText;
         break;
       default:
         if (command.startsWith('echo ')) {
